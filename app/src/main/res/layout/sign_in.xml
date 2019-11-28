@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:background="@color/offWhite"
+              android:gravity="center_horizontal"
+              android:padding="24dp"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <ImageView
+            android:id="@+id/signInDP"
+            android:layout_width="200dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:src="@drawable/male_ph"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".7"
+            android:layout_marginTop="8dp"
+            android:text="Ciroma Adekunle"
+            android:textSize="16sp"
+    />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight=".3"
+            android:layout_margin="8dp"
+            android:text="Welcome"
+            android:textSize="14sp"
+    />
+
+
+    <com.kevalpatel.passcodeview.PinView
+            android:id="@+id/pinView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            app:dividerColor="@color/offWhite"
+            app:fingerprintDefaultText="Scan your finger to unlock application"
+            app:fingerprintEnable="true"
+            app:fingerprintTextColor="@color/colorAccent"
+            app:fingerprintTextSize="14sp"
+            app:titleTextColor="@color/blue"
+    />
+
+
+</LinearLayout>
