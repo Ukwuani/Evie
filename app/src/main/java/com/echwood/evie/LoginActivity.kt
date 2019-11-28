@@ -1,11 +1,14 @@
 package com.echwood.evie
 
+import android.content.Intent
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewAnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.kevalpatel.passcodeview.authenticator.PasscodeViewPinAuthenticator
 import com.kevalpatel.passcodeview.indicators.CircleIndicator
 import com.kevalpatel.passcodeview.interfaces.AuthenticationListener
@@ -19,11 +22,15 @@ class LoginActivity : AppCompatActivity() {
 
     private val ARG_CURRENT_PIN = "current_pin"
 
+    lateinit var getXYSignInButton: IntArray
+    lateinit var  signInButtonLocation: Unit
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        getXYSignInButton = IntArray(2)
+        signInButtonLocation = signIn.getLocationInWindow(getXYSignInButton)
         initSignInPage()
     }
 
@@ -74,12 +81,15 @@ class LoginActivity : AppCompatActivity() {
                 //User authenticated successfully.
                 //Navigate to next screens.
                 Log.d("EVIE WORKER", "SUCCESSFUL")
+                startActivity(Intent(this@LoginActivity, Dashboard::class.java))
+                finish()
             }
 
             override fun onAuthenticationFailed() {
                 //Calls whenever authentication is failed or user is unauthorized.
                 //Do something if you want to handle unauthorized user.
                 Log.d("EVIE WORKER", "NOT SUCCESSFUL")
+
 
             }
         })
@@ -97,6 +107,18 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    fun signInCloseAnimation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ViewAnimationUtils.createCircularReveal(signInPage, getXYSignInButton[0], getXYSignInButton[1],   Math.hypot(mainPage.width.toDouble(), mainPage.height.toDouble()).toFloat(), 0f ).start()
+                .also {
+                    signInPage.visibility = View.GONE
+                }
+        } else {
+            signInPage.visibility = View.GONE
+        }
+
+    }
+
 
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -110,7 +132,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if ()
-        super.onBackPressed()
+        if (signInPage.isVisible) {
+            signInCloseAnimation()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
